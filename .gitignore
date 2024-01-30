@@ -51,6 +51,8 @@ coverage.xml
 .pytest_cache/
 cover/
 
+input/old_orders.csv
+
 # Translations
 *.mo
 *.pot
