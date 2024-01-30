@@ -14,11 +14,16 @@ def load_data(df_name):
     df = pd.read_csv(f"./input/{df_name}.csv")
     return df
 
+def custom_subheader(title, color):
+    st.markdown(f'<h3 style="color: {color};">{title}</span>', unsafe_allow_html=True)
+    
+
 def plot_bar_chart(data, x_label, y_label, title):
+    custom_subheader(title, '#9ED2BE')
+    st.bar_chart(data)
+
     st.xlabel = x_label
     st.ylabel = y_label
-    st.subheader(title)
-    st.bar_chart(data)
 
 def main():
     st.title("Instacart Data Dashboard")
@@ -47,7 +52,7 @@ def main():
     plot_bar_chart(orders_df['days_since_prior_order'].value_counts(), '이전 주문 이후 일수', '주문 횟수', '주문 간격 빈도')
 
     # 이전 주문 비율 (prior set 및 train set)
-    st.subheader('이전 주문 비율')
+    custom_subheader('이전 주문 비율', '#9ED2BE')
     prior_reorder_ratio = order_products_prior_df['reordered'].sum() / order_products_prior_df.shape[0]
     train_reorder_ratio = order_products_train_df['reordered'].sum() / order_products_train_df.shape[0]
 
@@ -59,7 +64,7 @@ def main():
         st.metric("train set", f"{train_reorder_ratio:.2%}")
 
     # 재주문이 없는 상품 비율
-    st.subheader('재주문이 없는 상품 비율')
+    custom_subheader('재주문이 없는 상품 비율', '#9ED2BE')
 
     # prior set
     grouped_df_prior = order_products_prior_df.groupby("order_id")["reordered"].aggregate("sum").reset_index()
